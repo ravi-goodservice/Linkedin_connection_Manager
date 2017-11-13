@@ -1,29 +1,48 @@
 class Api::LinkedinprofileController < ApplicationController
   def check_connection_sent
-    puts 'sssss'
-    puts params[:data]
-    linkedin_return_dict={}
-    for url in params[:data][:linkdin_url] do
-      puts url['linkurl']
-      check_linke=Linkedinconnectprofile.find_by_linkedinid_and_connectionsent_and_ConnectionSentByAccount(:url["linkurl"],'No',:url["emailid"])
-      if check_linke.to_s.empty?
-        linkedin_return_dict[url['div_id']]='No'
+    @check_connect = 0
+    email = params[:data][:emailid]
+    puts email
+    linkedin_url = params[:data][:linkdin_url]
+    if email.blank?
+      linkedin_return_dict = "please enter email to proceed further"
+    end
+    if linkedin_url.blank?
+      linkedin_return_dict = "Linkedin url is not there"
+    end
+    if email and linkedin_url
+      check_linke=Linkedinconnectprofile.where(linkedinid: linkedin_url)
+      if check_linke.blank?
+        linkedin_return_dict ='Not connected earlier'
+        @check_connect =1
       else
-        linkedin_return_dict[url['div_id']]='Yes'
+        if check_linke[0].connectionsent == 'Yes'
+          linkedin_return_dict ='Connected earlier'
+        end
       end
     end
-    render json: {status: 'SUCCESS', message: 'Checked', data: linkedin_return_dict}, status: :ok
+    render json: {status: 'SUCCESS', connect_status: @check_connect, data: linkedin_return_dict}, status: :ok
+
   end
   def add_connection
-    puts params[:data]
-    puts params[:data][:emailid]
-    puts params[:data][:linkdin_url]
-    check_linke=Linkedinconnectprofile.find_by_linkedinid(:params[:data][:linkdin_url])
-    if check_linke.to_s.empty?
-      Linkedinconnectprofile.create(:linkedinid => params[:data][:linkdin_url],:connectionsent => 'Yes',:ConnectionSentByAccount => params[:data][:emailid],:connectiondatetime =>Time.now )
-    else
-      puts check_linke
+    email = params[:data][:emailid]
+    linkedin_url = params[:data][:linkdin_url]
+    @check_connect = 0
+    if email.blank?
+      message = "please enter email to proceed further"
     end
-    render json: {status: 'SUCCESS', message: 'Checked', data: 'done'}, status: :ok
+    if linkedin_url.blank?
+      message = "Linkedin url is not there"
+    end
+    if email and linkedin_url
+      check_linke=Linkedinconnectprofile.where(linkedinid: params[:data][:linkdin_url])
+      if check_linke.blank?
+        Linkedinconnectprofile.create(:linkedinid => params[:data][:linkdin_url],:connectionsent => 'Yes',:ConnectionSentByAccount => params[:data][:emailid],:connectiondatetime =>Time.now )
+        @check_connect = 1
+      else
+        message ="Not connected ,Please contact tech team"
+      end
+    end
+    render json: {status: 'SUCCESS', connect_status: @check_connect, data: message}, status: :ok
   end
 end
