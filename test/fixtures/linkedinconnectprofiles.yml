@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  linkedinid: MyString
+  connectionsent: MyString
+  ConnectionSentByAccount: MyString
+  connectiondatetime: 2017-11-13 11:32:37
+
+two:
+  linkedinid: MyString
+  connectionsent: MyString
+  ConnectionSentByAccount: MyString
+  connectiondatetime: 2017-11-13 11:32:37
