@@ -11,15 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171113060237) do
+ActiveRecord::Schema.define(version: 20171114101141) do
 
   create_table "linkedinconnectprofiles", force: :cascade do |t|
     t.string   "linkedinid"
-    t.string   "connectionsent"
     t.string   "ConnectionSentByAccount"
     t.datetime "connectiondatetime"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.boolean  "is_scraped",              default: false
   end
 
 end
