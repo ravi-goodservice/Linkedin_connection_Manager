@@ -33,7 +33,7 @@ class Api::LinkedinprofileController < ApplicationController
     if linkedin_url.blank?
       message = "Linkedin url is not there"
     end
-    if linkedin_url
+    if email and linkedin_url
       check_linke=Linkedinconnectprofile.where(linkedinid: params[:data][:linkdin_url])
       if check_linke.blank?
         if params[:data][:scrapped_check].blank?
@@ -43,7 +43,7 @@ class Api::LinkedinprofileController < ApplicationController
         end
         @check_connect = 1
       else
-        if params[:data][:scrapped_check].blank?
+        if params[:data][:scrapped_check] == 'true'
           check_linke[0].is_scraped = true
           check_linke[0].scraped_datetime =Time.now
           check_linke[0].save
