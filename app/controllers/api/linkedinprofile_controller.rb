@@ -40,7 +40,7 @@ class Api::LinkedinprofileController < ApplicationController
         Linkedinconnectprofile.create(:linkedinid => params[:data][:linkdin_url],:connectionsent => 'Yes',:ConnectionSentByAccount => params[:data][:emailid],:connectiondatetime =>Time.now )
         @check_connect = 1
       else
-        message ="Not connected ,Please contact tech team"
+        message ="Already connected to our database"
       end
     end
     render json: {status: 'SUCCESS', connect_status: @check_connect, data: message}, status: :ok
