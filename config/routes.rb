@@ -1,15 +1,17 @@
 Rails.application.routes.draw do
+
+  devise_for :users
+  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'    #this is for rail admin
   namespace :api, defaults: {format: :json} do
-  #get 'linkedinprofile/check_connection_sent'
-    post 'linkedinprofile/check_connection_sent' => 'linkedinprofile#check_connection_sent'
-    post 'linkedinprofile/add_connection' => 'linkedinprofile#add_connection'
+    post 'linkedinprofile/check_connection_sent' => 'linkedinprofile#check_connection_sent'   #check connection api
+    post 'linkedinprofile/add_connection' => 'linkedinprofile#add_connection'                 #add connection api
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  root 'welcome#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
