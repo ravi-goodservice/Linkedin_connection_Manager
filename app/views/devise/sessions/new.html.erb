@@ -10,7 +10,7 @@
             <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
             <p id="profile-name" class="profile-name-card"></p>
       <span id="reauth-email" class="reauth-email"></span>
-        <%= f.email_field :email, autofocus: true,placeholder:"Password",class:"form-control" %>
+        <%= f.email_field :email, autofocus: true,placeholder:"email",class:"form-control" %>
         <%= f.password_field :password, autocomplete: "off",placeholder:"Password",class:"form-control" %>
         <% if devise_mapping.rememberable? -%>
       <div id="remember" class="checkbox">
